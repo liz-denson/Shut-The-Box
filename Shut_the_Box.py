@@ -4,7 +4,7 @@
 # 2023-09-29
 ######################################
 
-from MSDie import MSDie
+from CSC201UT import MSDie
 import random
 
 class ShutTheBox:
