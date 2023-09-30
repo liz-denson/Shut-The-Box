@@ -4,25 +4,29 @@
 # 2023-09-29
 ######################################
 
-from CSC201UT import MSDie
+from CSC201Ut import MSDie
 import random
 
 class ShutTheBox:
     def __init__(self):
         self.tiles = list(range(1, 10))
-        self.dice = [1, 2]
+        self.dice = [MSDie(6), MSDie(6)]
         self.players = []
 
-    def roll_dice(self): ##Use MSDIE CODE HERE
-        return [random.randint(1, 6) for _ in range(len(self.dice))]
+    def roll_dice(self):
+        if sum(self.tiles) <= 6:
+            return [self.dice[0].roll()]
+        else:
+            return [die.roll() for die in self.dice]
 
     def play_game(self, num_players):
         for player_num in range(1, num_players + 1):
             player_score = sum(self.tiles)
             while player_score > 0:
                 dice_result = self.roll_dice()
+                dice_sum = sum(dice_result)
                 print(f"Player {player_num} rolled: {dice_result}")
-                valid_moves = self.get_valid_moves(dice_result)
+                valid_moves = self.get_valid_moves(dice_sum)
                 if not valid_moves:
                     break
                 print(f"Valid moves: {valid_moves}")
@@ -33,15 +37,22 @@ class ShutTheBox:
             self.players.append((player_num, player_score))
         self.display_results()
 
-    def get_valid_moves(self, dice_result):
+    def get_valid_moves(self, dice_sum):
         valid_moves = []
-        for i in range(1, 10):
-            for subset in self.subsets(self.tiles, i):
-                if sum(subset) == sum(dice_result):
-                    valid_moves.append(subset)
+        for i in range(1, 2**len(self.tiles)):
+            bits = bin(i)[2:].zfill(len(self.tiles))
+            cur_combo = []
+            tile_sum = 0
+            for bit_index in range(len(bits)):
+                if bits[bit_index] == '1':
+                    tile_sum += bit_index + 1
+                    cur_combo.append(bit_index + 1)
+            if tile_sum == dice_sum:
+                valid_moves.append(cur_combo)
         return valid_moves
 
     def choose_move(self, valid_moves):
+        return random.choice(valid_moves)
 
     def flip_tiles(self, tiles_to_flip):
         for tile in tiles_to_flip:
