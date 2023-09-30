@@ -4,23 +4,24 @@
 # 2023-09-29
 ######################################
 
-from CSC201Ut import MSDie
+from MSDie import MSDie
 import random
 
 class ShutTheBox:
     def __init__(self):
         self.tiles = list(range(1, 10))
-        self.dice = [MSDie(6), MSDie(6)]
+        self.dice = [MSDie(6), MSDie(6)] # Initialized with two 6-sided dice
         self.players = []
 
     def roll_dice(self):
         if sum(self.tiles) <= 6:
-            return [self.dice[0].roll()]
+            return [self.dice[0].roll()] # Roll only one die if sum of tiles is 6 or less
         else:
-            return [die.roll() for die in self.dice]
+            return [die.roll() for die in self.dice] # Roll both dice otherwise
 
     def play_game(self, num_players):
         for player_num in range(1, num_players + 1):
+            self.tiles = list(range(1, 10)) # Reset tiles for each player
             player_score = sum(self.tiles)
             while player_score > 0:
                 dice_result = self.roll_dice()
