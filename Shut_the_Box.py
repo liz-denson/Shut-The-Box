@@ -105,7 +105,7 @@ if __name__ == "__main__":
 #########
 
 # ANSI escape codes used to format text the terminal
-    # Lines (73, 75, 83, 86, 88, & 92)
+    # Lines (77, 79, 87, 90, 92, & 96)
     # URL: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797#file-ansi-md
     
 # Try Except error handling
