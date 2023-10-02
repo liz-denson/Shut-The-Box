@@ -20,7 +20,7 @@ class ShutTheBox:
 
     def roll_dice(self):
         """Roll one or two dice based on the sum of tiles."""
-        if sum(self.tiles) <= 6: # if sum of tiles is 6 or less
+        if sum(self.tiles) <= 21: # if sum of tiles is 6 or less
             return [self.dice[0].roll()] # roll only one die
         else: # otherwise
             return [die.roll() for die in self.dice] # roll both dice
@@ -74,9 +74,9 @@ class ShutTheBox:
         winner_score = min(self.players, key=lambda player: player[1])[1] # find player with min score
         winners = [player[0] for player in self.players if player[1] == winner_score] # list players with min score
         if len(winners) == 1: # if only one winner
-            print(f"\033[1m\033[92mPlayer {winners[0]} wins!\033[0m") # announce winner
+            print(f"Player {winners[0]} wins!") # announce winner
         else: # otherwise
-            print(f"\033[1m\033[92mPlayers {', '.join(map(str, winners))} tie!\033[0m") # announce tie
+            print(f"Players {', '.join(map(str, winners))} tie!") # announce tie
 
 ######
 # MAIN
@@ -84,16 +84,16 @@ class ShutTheBox:
 
 def main():
     """Main function to initiate the game."""
-    print("\033[1mWelcome to Shut the Box!\033[0m") # print bold game message
+    print("Welcome to Shut the Box!") # print game message
     while True:
         try:
-            num_players = int(input("\033[94mHow many players?\033[0m ")) # input number of players in blue
+            num_players = int(input("How many players? ")) # input number of players
             if num_players <= 0: 
-                print("\033[91mPlease enter a positive number of players.\033[0m") # red error if not positive (ex: 0)
+                print("Please enter a positive number of players.") # error if not positive (ex: 0)
                 continue # request user input again
             break # exit loop
         except ValueError: # ValueError when input isn't valid integer
-            print("\033[91mPlease enter a valid integer for the number of players.\033[0m") # red error if invalid
+            print("Please enter a valid integer for the number of players.") # error if invalid int
     game = ShutTheBox() # instantiate a new game
     game.play_game(num_players) # call the play_game method
     
@@ -104,10 +104,7 @@ if __name__ == "__main__":
 # SOURCES
 #########
 
-# ANSI escape codes used to format text the terminal
-    # Lines (77, 79, 87, 90, 92, & 96)
-    # URL: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797#file-ansi-md
-    
+
 # Try Except error handling
     # Lines (89 - 96)
     # URL: https://www.w3schools.com/python/python_try_except.asp
